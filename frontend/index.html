@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Scraper Launch</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="matrix-canvas"></canvas>
+
+  <h1 class="blur-text">Welcome Sir</h1>
+  <p id="scrape-message" class="blur-text delay-1"></p>
+
+  <!-- Step 1: Choose Source -->
+  <ul class="options blur-text delay-2" id="initial-options">
+    <li><button onclick="selectOption('marketplace')">Marketplace</button></li>
+    <li><button onclick="selectOption('other')">Other Sites</button></li>
+  </ul>
+
+  <!-- Step 2a: Marketplace Options -->
+  <div id="marketplace-options" class="hidden">
+    <div class="options">
+      <button onclick="chooseMarketplaceMode('bulk')">Bulk</button>
+      <button onclick="chooseMarketplaceMode('single')">Single</button>
+      <button class="back-btn inline-back" onclick="goBack('marketplace-options')">← Back</button>
+    </div>
+  </div>
+
+  <!-- Step 2b: Bulk Upload -->
+  <div id="bulk-upload" class="hidden">
+    <p class="subtitle">Upload your CSV file:</p>
+    <input type="file" accept=".csv" />
+    <button class="back-btn" onclick="goBack('bulk-upload')">← Back</button>
+  </div>
+
+  <!-- Step 2c: URL Input -->
+  <div id="url-input" class="hidden">
+    <p class="subtitle">Paste the URL below:</p>
+    <input type="text" placeholder="https://example.com/page" />
+    <button class="back-btn" onclick="goBack('url-input')">← Back</button>
+  </div>
+
+  <!-- Step 3: Start Extraction -->
+  <div id="start-button-container" class="hidden">
+    <button class="start-btn">Start Extraction</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
