@@ -106,8 +106,9 @@ function goBack(currentSectionId) {
 
   document.getElementById("start-button-container").classList.add("hidden");
 }
-function startScraping() {
- const resultTable = document.querySelector("#results-table tbody");
+
+// 📦 Scraping + Results Table
+const resultTable = document.querySelector("#results-table tbody");
 const resultsContainer = document.getElementById("results-container");
 let scrapedResults = [];
 
@@ -177,4 +178,3 @@ function downloadCSV() {
   link.click();
   document.body.removeChild(link);
 }
-
