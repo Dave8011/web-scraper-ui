@@ -32,7 +32,6 @@ function drawMatrix() {
     drops[i]++;
   }
 }
-
 setInterval(drawMatrix, 35);
 
 window.addEventListener('resize', () => {
@@ -53,7 +52,6 @@ const messages = [
   "Data acquisition module active. Select origin point to proceed.",
   "Scrape bot primed. Feed me a starting point, boss."
 ];
-
 const msgElement = document.getElementById('scrape-message');
 setTimeout(() => {
   const randomIndex = Math.floor(Math.random() * messages.length);
@@ -104,19 +102,21 @@ function goBack(currentSectionId) {
     }
   }
 
-  // ✅ Clear old results and loader
+  // ✅ Clear old results
   scrapedResults = [];
   resultTable.innerHTML = '';
   resultsContainer.classList.add("hidden");
   loaderText.classList.add("hidden");
+  scrapeCompleteText.classList.add("hidden");
 
   document.getElementById("start-button-container").classList.add("hidden");
 }
 
-// 📦 Scraping + Results Table
+// SCRAPING + RESULTS
 const resultTable = document.querySelector("#results-table tbody");
 const resultsContainer = document.getElementById("results-container");
 const loaderText = document.getElementById("loader-text");
+const scrapeCompleteText = document.getElementById("scrape-complete");
 let scrapedResults = [];
 
 function startScraping() {
@@ -126,7 +126,8 @@ function startScraping() {
   scrapedResults = [];
   resultTable.innerHTML = '';
   resultsContainer.classList.remove("hidden");
-  loaderText.classList.remove("hidden"); // ✅ Show loader
+  loaderText.classList.remove("hidden");
+  scrapeCompleteText.classList.add("hidden");
 
   if (!fileInput.classList.contains("hidden") && fileInput.files.length > 0) {
     Papa.parse(fileInput.files[0], {
@@ -137,14 +138,18 @@ function startScraping() {
         urls.forEach((url, i) => {
           scrapeURL(url, i + 1, () => {
             completed++;
-            if (completed === urls.length) loaderText.classList.add("hidden");
+            if (completed === urls.length) {
+              loaderText.classList.add("hidden");
+              scrapeCompleteText.classList.remove("hidden");
+            }
           });
         });
       }
     });
   } else if (urlInput && urlInput.value.trim() !== "") {
     scrapeURL(urlInput.value.trim(), 1, () => {
-      loaderText.classList.add("hidden"); // ✅ Hide loader after single
+      loaderText.classList.add("hidden");
+      scrapeCompleteText.classList.remove("hidden");
     });
   } else {
     alert("Please upload a CSV or enter a URL");
@@ -162,13 +167,15 @@ function scrapeURL(url, index, callback) {
   })
   .then(res => res.json())
   .then(data => {
-    scrapedResults.push({ url: url, title: data.title });
+    scrapedResults.push({ url: url, title: data.title, price: data.price, rating: data.rating });
 
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${index}</td>
       <td>${url}</td>
       <td>${data.title}</td>
+      <td>${data.price || 'N/A'}</td>
+      <td>${data.rating || 'N/A'}</td>
     `;
     resultTable.appendChild(row);
     if (callback) callback();
@@ -181,8 +188,8 @@ function scrapeURL(url, index, callback) {
 
 function downloadCSV() {
   const csvData = [
-    ["#", "URL", "Title"],
-    ...scrapedResults.map((r, i) => [i + 1, r.url, r.title])
+    ["#", "URL", "Title", "Price", "Rating"],
+    ...scrapedResults.map((r, i) => [i + 1, r.url, r.title, r.price, r.rating])
   ];
   const csvContent = Papa.unparse(csvData);
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
