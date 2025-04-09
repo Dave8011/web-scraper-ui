@@ -104,12 +104,19 @@ function goBack(currentSectionId) {
     }
   }
 
+  // ✅ Clear old results and loader
+  scrapedResults = [];
+  resultTable.innerHTML = '';
+  resultsContainer.classList.add("hidden");
+  loaderText.classList.add("hidden");
+
   document.getElementById("start-button-container").classList.add("hidden");
 }
 
 // 📦 Scraping + Results Table
 const resultTable = document.querySelector("#results-table tbody");
 const resultsContainer = document.getElementById("results-container");
+const loaderText = document.getElementById("loader-text");
 let scrapedResults = [];
 
 function startScraping() {
@@ -119,25 +126,33 @@ function startScraping() {
   scrapedResults = [];
   resultTable.innerHTML = '';
   resultsContainer.classList.remove("hidden");
+  loaderText.classList.remove("hidden"); // ✅ Show loader
 
   if (!fileInput.classList.contains("hidden") && fileInput.files.length > 0) {
     Papa.parse(fileInput.files[0], {
       header: false,
       complete: function(results) {
         const urls = results.data.map(row => row[0]).filter(Boolean);
+        let completed = 0;
         urls.forEach((url, i) => {
-          scrapeURL(url, i + 1);
+          scrapeURL(url, i + 1, () => {
+            completed++;
+            if (completed === urls.length) loaderText.classList.add("hidden");
+          });
         });
       }
     });
   } else if (urlInput && urlInput.value.trim() !== "") {
-    scrapeURL(urlInput.value.trim(), 1);
+    scrapeURL(urlInput.value.trim(), 1, () => {
+      loaderText.classList.add("hidden"); // ✅ Hide loader after single
+    });
   } else {
     alert("Please upload a CSV or enter a URL");
+    loaderText.classList.add("hidden");
   }
 }
 
-function scrapeURL(url, index) {
+function scrapeURL(url, index, callback) {
   fetch("https://web-scraper-backend-7izp.onrender.com/scrape", {
     method: "POST",
     headers: {
@@ -156,9 +171,11 @@ function scrapeURL(url, index) {
       <td>${data.title}</td>
     `;
     resultTable.appendChild(row);
+    if (callback) callback();
   })
   .catch(err => {
     console.error("Error scraping:", err);
+    if (callback) callback();
   });
 }
 
