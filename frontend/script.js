@@ -107,28 +107,74 @@ function goBack(currentSectionId) {
   document.getElementById("start-button-container").classList.add("hidden");
 }
 function startScraping() {
+ const resultTable = document.querySelector("#results-table tbody");
+const resultsContainer = document.getElementById("results-container");
+let scrapedResults = [];
+
+function startScraping() {
+  const fileInput = document.querySelector('#bulk-upload input[type="file"]');
   const urlInput = document.querySelector('#url-input input');
-  const url = urlInput.value.trim();
 
-  if (!url) {
-    alert("Please enter a URL");
-    return;
+  scrapedResults = [];
+  resultTable.innerHTML = '';
+  resultsContainer.classList.remove("hidden");
+
+  if (!fileInput.classList.contains("hidden") && fileInput.files.length > 0) {
+    Papa.parse(fileInput.files[0], {
+      header: false,
+      complete: function(results) {
+        const urls = results.data.map(row => row[0]).filter(Boolean);
+        urls.forEach((url, i) => {
+          scrapeURL(url, i + 1);
+        });
+      }
+    });
+  } else if (urlInput && urlInput.value.trim() !== "") {
+    scrapeURL(urlInput.value.trim(), 1);
+  } else {
+    alert("Please upload a CSV or enter a URL");
   }
+}
 
+function scrapeURL(url, index) {
   fetch("https://web-scraper-backend-7izp.onrender.com/scrape", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ url: url })
+    body: JSON.stringify({ url })
   })
   .then(res => res.json())
   .then(data => {
-    alert("Scraped Title: " + data.title);
-    console.log("Scraped Data:", data);
+    scrapedResults.push({ url: url, title: data.title });
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${index}</td>
+      <td>${url}</td>
+      <td>${data.title}</td>
+    `;
+    resultTable.appendChild(row);
   })
   .catch(err => {
-    alert("Something went wrong while scraping.");
-    console.error("Scraping error:", err);
+    console.error("Error scraping:", err);
   });
 }
+
+function downloadCSV() {
+  const csvData = [
+    ["#", "URL", "Title"],
+    ...scrapedResults.map((r, i) => [i + 1, r.url, r.title])
+  ];
+  const csvContent = Papa.unparse(csvData);
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", "scraped_results.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
