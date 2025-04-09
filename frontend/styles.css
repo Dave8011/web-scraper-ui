@@ -165,6 +165,13 @@ body {
   background: #0f0;
   color: #000;
 }
+/*-----------------------
+LOADING
+------------------------*/
+#loader-text {
+  margin-top: 1rem;
+  color: #0f0;
+}
 
   /* -------------------------
   MATRIX BACKGROUND EFFECT
