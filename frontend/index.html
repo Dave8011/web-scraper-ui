@@ -9,6 +9,9 @@
 <body>
   <canvas id="matrix-canvas"></canvas>
 
+  <!-- Dark Mode Toggle -->
+  <button id="dark-toggle">🌙</button>
+
   <h1 class="blur-text">Welcome Sir</h1>
   <p id="scrape-message" class="blur-text delay-1"></p>
 
@@ -48,27 +51,28 @@
 
   <!-- Scraping Progress Text -->
   <p id="loader-text" class="hidden subtitle">⏳ Scraping... Please wait</p>
-  <p id="scrape-complete" class="hidden subtitle" style="color:#0f0;">✅ Scrape Complete!</p>
+  <p id="scrape-complete" class="hidden subtitle success-text">✅ Scrape Complete!</p>
 
   <!-- Scraped Results -->
   <div id="results-container" class="hidden">
     <p class="subtitle">Scraped Results:</p>
-    <table id="results-table" border="1">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>URL</th>
-          <th>Title</th>
-          <th>Price</th>
-          <th>Rating</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="table-scroll">
+      <table id="results-table" border="1">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>URL</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
     <button class="start-btn" onclick="downloadCSV()">⬇ Download CSV</button>
   </div>
 
-  <!-- PapaParse Library -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script src="script.js"></script>
 </body>
