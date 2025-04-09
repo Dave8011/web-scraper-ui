@@ -14,6 +14,12 @@ body {
   text-align: center;
   padding: 2rem 1rem;
   overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.light-mode {
+  background: #f0f0f0;
+  color: #000;
 }
 
 /* --------- Text Animations --------- */
@@ -55,8 +61,8 @@ body {
 
 .options button {
   background: transparent;
-  border: 1px solid #fff;
-  color: #fff;
+  border: 1px solid currentColor;
+  color: inherit;
   padding: 0.6rem 1.5rem;
   font-size: 1.1rem;
   border-radius: 999px;
@@ -65,7 +71,7 @@ body {
 }
 
 .options button:hover {
-  background: #fff;
+  background: currentColor;
   color: #000;
 }
 
@@ -85,9 +91,9 @@ input[type="text"] {
   padding: 0.7em 1em;
   font-size: 1rem;
   border-radius: 8px;
-  border: 1px solid #fff;
+  border: 1px solid currentColor;
   background: transparent;
-  color: #fff;
+  color: inherit;
   width: 100%;
   max-width: 300px;
   text-align: center;
@@ -101,8 +107,8 @@ input[type="text"]::placeholder {
 .start-btn {
   margin-top: 2rem;
   background: transparent;
-  color: #fff;
-  border: 1px solid #fff;
+  color: inherit;
+  border: 1px solid currentColor;
   padding: 0.8em 2em;
   font-size: 1.2rem;
   border-radius: 999px;
@@ -111,7 +117,7 @@ input[type="text"]::placeholder {
 }
 
 .start-btn:hover {
-  background: #fff;
+  background: currentColor;
   color: #000;
 }
 
@@ -126,8 +132,8 @@ h1.blur-text {
 /* --------- Back Buttons --------- */
 .back-btn {
   background: transparent;
-  border: 1px solid #fff;
-  color: #fff;
+  border: 1px solid currentColor;
+  color: inherit;
   font-size: 1.2rem;
   padding: 0.4em 1em;
   border-radius: 50px;
@@ -140,7 +146,7 @@ h1.blur-text {
 }
 
 .back-btn:hover {
-  background: #fff;
+  background: currentColor;
   color: #000;
 }
 
@@ -162,13 +168,27 @@ TABLE
   overflow-x: auto;
   display: block;
   white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: #0f0 #222;
+}
+
+#results-table::-webkit-scrollbar {
+  height: 8px;
+}
+
+#results-table::-webkit-scrollbar-track {
+  background: #222;
+}
+
+#results-table::-webkit-scrollbar-thumb {
+  background: #0f0;
 }
 
 #results-table th,
 #results-table td {
-  border: 1px solid #fff;
+  border: 1px solid currentColor;
   padding: 0.5rem;
-  color: #fff;
+  color: inherit;
 }
 
 #results-table th {
@@ -194,4 +214,27 @@ MATRIX BACKGROUND EFFECT
   z-index: -1;
   width: 100vw;
   height: 100vh;
+}
+
+/* -------------------------
+DARK MODE TOGGLE
+------------------------- */
+#dark-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: #0f0;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #000;
+  transition: 0.3s ease;
+  z-index: 2;
+}
+
+body.light-mode #dark-toggle {
+  background: #000;
+  color: #fff;
 }
