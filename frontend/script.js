@@ -193,6 +193,13 @@ function scrapeURL(url, index, callback) {
     if (callback) callback();
   });
 }
+// 🌙 DARK MODE TOGGLE
+document.getElementById("dark-toggle").addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+  const btn = document.getElementById("dark-toggle");
+  btn.textContent = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
+});
+
 
 function downloadCSV() {
   const csvData = [
