@@ -1,170 +1,181 @@
 /* -------------------------
 HOME PAGE CSS
 ------------------------- */
-
 body {
-    margin: 0;
-    background: #000;
-    color: #fff;
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    overflow: hidden;
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 2rem 1rem;
+  overflow-x: hidden;
+}
+
+/* --------- Text Animations --------- */
+.blur-text {
+  filter: blur(10px);
+  opacity: 0;
+  animation: blurIn 1.5s forwards;
+}
+
+.delay-1 {
+  animation-delay: 2s;
+}
+
+.delay-2 {
+  animation-delay: 5s;
+}
+
+@keyframes blurIn {
+  to {
+    filter: blur(0);
+    opacity: 1;
   }
-  
-  .blur-text {
-    filter: blur(10px);
-    opacity: 0;
-    animation: blurIn 1.5s forwards;
-  }
-  
-  .delay-1 {
-    animation-delay: 2s;
-  }
-  
-  .delay-2 {
-    animation-delay: 5s;
-  }
-  
-  @keyframes blurIn {
-    to {
-      filter: blur(0);
-      opacity: 1;
-    }
-  }
-  
-  .options {
-    list-style: none;
-    padding: 0;
-    margin: 2rem 0 0;
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  .options li {
-    margin: 0;
-  }
-  
-  .options button {
-    background: transparent;
-    border: 1px solid #fff;
-    color: #fff;
-    padding: 0.6rem 1.5rem;
-    font-size: 1.1rem;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s;
-  }
-  
-  .options button:hover {
-    background: #fff;
-    color: #000;
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  .subtitle {
-    font-size: 1.5rem;
-    margin-top: 2rem;
-  }
-  
-  input[type="file"],
-  input[type="text"] {
-    margin-top: 1rem;
-    padding: 0.7em 1em;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #fff;
-    background: transparent;
-    color: #fff;
-    width: 280px;
-    text-align: center;
-  }
-  
-  input[type="text"]::placeholder {
-    color: #aaa;
-  }
-  
-  .start-btn {
-    margin-top: 2rem;
-    background:transparent;
-    color: #fff;
-    border: 1px solid #fff;
-    padding: 0.8em 2em;
-    font-size: 1.2rem;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: 0.3s ease;
-  }
-  
-  .start-btn:hover {
-    background: #fff;
-    color: #000;
-  }
-  
-  h1.blur-text {
-    font-size: 3rem; /* Bigger Welcome text */
-  }
-  
-  #scrape-message.blur-text {
-    font-size: 1.5rem; /* Bigger random message */
-  }
-  
-  .back-btn {
-    background: transparent;
-    border: 1px solid #fff;
-    color: #fff;
-    font-size: 1.2rem;
-    padding: 0.4em 1em;
-    border-radius: 50px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.4em;
-    margin-top: 1.5rem;
-    transition: background 0.3s, color 0.3s;
-  }
-  
-  .back-btn:hover {
-    background: #fff;
-    color: #000;
-  }
-  
-  .inline-back {
-    padding: 0.6rem 1rem;
-    font-size: 1rem;
-    margin-top: 0;
-    margin-left: 1rem;
-  }
+}
+
+/* --------- Options Buttons --------- */
+.options {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.options li {
+  margin: 0;
+}
+
+.options button {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 0.6rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.options button:hover {
+  background: #fff;
+  color: #000;
+}
+
+.hidden {
+  display: none;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* --------- Inputs --------- */
+input[type="file"],
+input[type="text"] {
+  margin-top: 1rem;
+  padding: 0.7em 1em;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+}
+
+input[type="text"]::placeholder {
+  color: #aaa;
+}
+
+/* --------- Start Button --------- */
+.start-btn {
+  margin-top: 2rem;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 0.8em 2em;
+  font-size: 1.2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.start-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+h1.blur-text {
+  font-size: 3rem;
+}
+
+#scrape-message.blur-text {
+  font-size: 1.5rem;
+}
+
+/* --------- Back Buttons --------- */
+.back-btn {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.4em 1em;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-top: 1.5rem;
+  transition: background 0.3s, color 0.3s;
+}
+
+.back-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.inline-back {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  margin-top: 0;
+  margin-left: 1rem;
+}
 
 /* --------------------------
-  TABLE
+TABLE
 ----------------------------*/
 #results-table {
   margin-top: 2rem;
   border-collapse: collapse;
-  width: 90%;
-  max-width: 900px;
+  width: 100%;
+  max-width: 90vw;
+  overflow-x: auto;
+  display: block;
+  white-space: nowrap;
 }
 
 #results-table th,
 #results-table td {
   border: 1px solid #fff;
   padding: 0.5rem;
+  color: #fff;
 }
 
 #results-table th {
   background: #0f0;
   color: #000;
 }
+
 /*-----------------------
 LOADING
 ------------------------*/
@@ -173,13 +184,14 @@ LOADING
   color: #0f0;
 }
 
-  /* -------------------------
-  MATRIX BACKGROUND EFFECT
-  ------------------------- */
-  
-  #matrix-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }  
+/* -------------------------
+MATRIX BACKGROUND EFFECT
+------------------------- */
+#matrix-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+}
