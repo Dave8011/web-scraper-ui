@@ -1,5 +1,3 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-<script>
 // MATRIX BACKGROUND
 const canvas = document.getElementById('matrix-canvas');
 const ctx = canvas.getContext('2d');
@@ -104,6 +102,7 @@ function goBack(currentSectionId) {
     }
   }
 
+  // ✅ Clear old results
   scrapedResults = [];
   resultTable.innerHTML = '';
   resultsContainer.classList.add("hidden");
@@ -171,40 +170,26 @@ function scrapeURL(url, index, callback) {
     scrapedResults.push({ url: url, title: data.title, price: data.price, rating: data.rating });
 
     const row = document.createElement("tr");
-    row.innerHTML = `
+    row.innerHTML = 
       <td>${index}</td>
       <td>${url}</td>
       <td>${data.title}</td>
       <td>${data.price || 'N/A'}</td>
       <td>${data.rating || 'N/A'}</td>
-    `;
+    ;
     resultTable.appendChild(row);
     if (callback) callback();
   })
   .catch(err => {
     console.error("Error scraping:", err);
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${index}</td>
-      <td>${url}</td>
-      <td colspan="3">❌ Error scraping this URL</td>
-    `;
-    resultTable.appendChild(row);
     if (callback) callback();
   });
 }
-// 🌙 DARK MODE TOGGLE
-document.getElementById("dark-toggle").addEventListener("click", () => {
-  document.body.classList.toggle("light-mode");
-  const btn = document.getElementById("dark-toggle");
-  btn.textContent = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
-});
-
 
 function downloadCSV() {
   const csvData = [
     ["#", "URL", "Title", "Price", "Rating"],
-    ...scrapedResults.map((r, i) => [i + 1, r.url, r.title, r.price || 'N/A', r.rating || 'N/A'])
+    ...scrapedResults.map((r, i) => [i + 1, r.url, r.title, r.price, r.rating])
   ];
   const csvContent = Papa.unparse(csvData);
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -217,4 +202,3 @@ function downloadCSV() {
   link.click();
   document.body.removeChild(link);
 }
-</script>
